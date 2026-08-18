@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlowPilot AI — Automate the busywork. Book the business.</title>
+<meta name="description" content="FlowPilot AI builds custom automation systems for small business owners, agencies, consultants, and local service pros — so you respond faster, capture more leads, and scale without hiring.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#09090b;
+    --bg-soft:#0d0d10;
+    --card:#141417;
+    --card-hover:#18181c;
+    --border:#242429;
+    --border-strong:#333338;
+    --fg:#fafafa;
+    --muted:#a1a1aa;
+    --muted-2:#71717a;
+    --primary:#7c3aed;
+    --primary-hover:#6d28d9;
+    --primary-soft:rgba(124,58,237,0.12);
+    --primary-soft-strong:rgba(124,58,237,0.22);
+    --ring:#8b5cf6;
+    --radius:0.75rem;
+    --radius-lg:1rem;
+    --font-display:'Sora', 'Inter', system-ui, sans-serif;
+    --font-body:'Inter', system-ui, sans-serif;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img,svg{display:block; max-width:100%;}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+
+  :focus-visible{
+    outline:2px solid var(--ring);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* Background texture: faint grid + radial glow */
+  .bg-fx{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    background:
+      radial-gradient(60% 50% at 50% 0%, rgba(124,58,237,0.18) 0%, rgba(124,58,237,0) 60%),
+      linear-gradient(var(--bg) 0%, var(--bg) 100%);
+    pointer-events:none;
+  }
+  .bg-grid{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size:48px 48px;
+    -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 0%, black 20%, transparent 75%);
+    mask-image:radial-gradient(ellipse 70% 60% at 50% 0%, black 20%, transparent 75%);
+    pointer-events:none;
+  }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(9,9,11,0.75);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 24px;
+    max-width:1120px;
+    margin:0 auto;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:1.05rem;
+    letter-spacing:-0.01em;
+  }
+  .logo-mark{
+    width:28px; height:28px;
+    border-radius:8px;
+    background:linear-gradient(135deg, var(--primary), #a78bfa);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 0 1px rgba(255,255,255,0.06), 0 4px 12px rgba(124,58,237,0.35);
+  }
+  .nav-cta{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--primary);
+    color:#fff;
+    font-size:0.875rem;
+    font-weight:600;
+    padding:9px 16px;
+    border-radius:8px;
+    border:1px solid var(--primary-hover);
+    transition:background .15s ease, transform .15s ease;
+  }
+  .nav-cta:hover{background:var(--primary-hover); transform:translateY(-1px);}
+
+  /* ---------- SHARED ---------- */
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:0.75rem;
+    font-weight:600;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:#c4b5fd;
+    background:var(--primary-soft);
+    border:1px solid rgba(124,58,237,0.35);
+    padding:6px 12px;
+    border-radius:999px;
+  }
+  .eyebrow .dot{
+    width:6px; height:6px; border-radius:50%;
+    background:#a78bfa;
+    box-shadow:0 0 0 3px rgba(167,139,250,0.25);
+  }
+  .section-head{
+    text-align:center;
+    max-width:640px;
+    margin:0 auto 56px;
+  }
+  .section-title{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(1.75rem, 3.4vw, 2.5rem);
+    letter-spacing:-0.02em;
+    margin-top:16px;
+    line-height:1.15;
+  }
+  .section-sub{
+    color:var(--muted);
+    font-size:1.05rem;
+    margin-top:14px;
+  }
+  section{ padding:96px 0; position:relative; }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:0.95rem;
+    padding:13px 24px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+    border:1px solid transparent;
+    white-space:nowrap;
+  }
+  .btn-primary{
+    background:var(--primary);
+    color:#fff;
+    border-color:var(--primary-hover);
+    box-shadow:0 1px 0 rgba(255,255,255,0.08) inset, 0 8px 24px -8px rgba(124,58,237,0.6);
+  }
+  .btn-primary:hover{ background:var(--primary-hover); transform:translateY(-2px); }
+  .btn-secondary{
+    background:transparent;
+    color:var(--fg);
+    border-color:var(--border-strong);
+  }
+  .btn-secondary:hover{ background:var(--card-hover); border-color:#4c4c53; transform:translateY(-2px); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:88px 0 80px;
+    position:relative;
+  }
+  .hero-inner{
+    text-align:center;
+    max-width:780px;
+    margin:0 auto;
+  }
+  .hero h1{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:clamp(2.3rem, 5.6vw, 3.75rem);
+    letter-spacing:-0.03em;
+    line-height:1.08;
+    margin-top:22px;
+  }
+  .hero h1 .accent{
+    background:linear-gradient(135deg, #a78bfa, #7c3aed 60%, #c4b5fd);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero p.sub{
+    margin-top:22px;
+    font-size:clamp(1rem, 1.6vw, 1.15rem);
+    color:var(--muted);
+    max-width:620px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .hero-actions{
+    margin-top:34px;
+    display:flex;
+    gap:14px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .hero-note{
+    margin-top:16px;
+    font-size:0.82rem;
+    color:var(--muted-2);
+  }
+
+  /* Signature flow diagram */
+  .flow-wrap{
+    margin-top:64px;
+    display:flex;
+    justify-content:center;
+  }
+  .flow-svg{
+    width:100%;
+    max-width:640px;
+    height:auto;
+  }
+  .flow-line{
+    fill:none;
+    stroke:url(#flowGrad);
+    stroke-width:2;
+    stroke-linecap:round;
+    stroke-dasharray:6 10;
+    animation:flowMove 3.2s linear infinite;
+    opacity:0.85;
+  }
+  .flow-line.delay{ animation-duration:4s; }
+  @keyframes flowMove{
+    to{ stroke-dashoffset:-160; }
+  }
+  .flow-node{
+    fill:var(--card);
+    stroke:var(--border-strong);
+    stroke-width:1.5;
+  }
+  .flow-node-glow{
+    fill:var(--primary);
+    opacity:0.9;
+  }
+  .flow-label{
+    font-family:var(--font-body);
+    font-size:11px;
+    fill:var(--muted);
+    font-weight:600;
+    letter-spacing:0.02em;
+  }
+  .flow-pulse{
+    animation:pulseGlow 2.4s ease-in-out infinite;
+  }
+  @keyframes pulseGlow{
+    0%,100%{ opacity:0.55; }
+    50%{ opacity:1; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .flow-line{ animation:none; }
+    .flow-pulse{ animation:none; }
+  }
+
+  /* ---------- VIDEO CARD ---------- */
+  .video-card{
+    margin-top:56px;
+    max-width:760px;
+    margin-left:auto;
+    margin-right:auto;
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    background:linear-gradient(180deg, var(--card), var(--bg-soft));
+    padding:10px;
+    box-shadow:0 20px 60px -20px rgba(0,0,0,0.6);
+  }
+  .video-frame{
+    position:relative;
+    border-radius:calc(var(--radius-lg) - 4px);
+    overflow:hidden;
+    aspect-ratio:16/9;
+    background:
+      radial-gradient(60% 80% at 50% 30%, rgba(124,58,237,0.25), transparent 70%),
+      #0c0c0f;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    border:1px solid var(--border);
+  }
+  .video-frame iframe{
+    position:absolute; inset:0; width:100%; height:100%; border:0;
+  }
+  .play-btn{
+    width:68px; height:68px;
+    border-radius:50%;
+    background:var(--primary);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 0 8px rgba(124,58,237,0.14), 0 12px 30px -8px rgba(124,58,237,0.65);
+    transition:transform .2s ease;
+  }
+  .video-frame:hover .play-btn{ transform:scale(1.06); }
+  .video-caption{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:14px 10px 6px;
+    flex-wrap:wrap;
+  }
+  .video-caption p{
+    font-size:0.875rem;
+    color:var(--muted);
+  }
+  .video-caption p strong{ color:var(--fg); }
+  .runtime-pill{
+    font-size:0.75rem;
+    color:var(--muted-2);
+    border:1px solid var(--border);
+    padding:4px 10px;
+    border-radius:999px;
+  }
+
+  /* ---------- PROBLEM SECTION ---------- */
+  .problem{
+    background:var(--bg-soft);
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+  }
+  .problem-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+  }
+  .problem-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:28px 24px;
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .problem-card:hover{
+    border-color:rgba(124,58,237,0.45);
+    transform:translateY(-3px);
+  }
+  .problem-icon{
+    width:40px; height:40px;
+    border-radius:9px;
+    background:rgba(239,68,68,0.1);
+    border:1px solid rgba(239,68,68,0.25);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:18px;
+    color:#f87171;
+  }
+  .problem-card h3{
+    font-family:var(--font-display);
+    font-size:1.08rem;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    margin-bottom:10px;
+  }
+  .problem-card p{
+    color:var(--muted);
+    font-size:0.92rem;
+  }
+  .problem-foot{
+    text-align:center;
+    margin-top:44px;
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.15rem;
+    color:var(--fg);
+  }
+  .problem-foot span{ color:#c4b5fd; }
+
+  /* ---------- SOLUTION SECTION ---------- */
+  .solution-top{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+    max-width:720px;
+    margin:0 auto 72px;
+  }
+  .benefit-row{
+    display:flex;
+    align-items:flex-start;
+    gap:16px;
+    padding:18px 20px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .benefit-row:hover{
+    border-color:rgba(124,58,237,0.4);
+    background:var(--card-hover);
+  }
+  .benefit-icon{
+    flex-shrink:0;
+    width:36px; height:36px;
+    border-radius:8px;
+    background:var(--primary-soft);
+    border:1px solid rgba(124,58,237,0.35);
+    display:flex; align-items:center; justify-content:center;
+    color:#c4b5fd;
+  }
+  .benefit-text h4{
+    font-family:var(--font-display);
+    font-size:1rem;
+    font-weight:700;
+    margin-bottom:3px;
+    letter-spacing:-0.005em;
+  }
+  .benefit-text p{
+    color:var(--muted);
+    font-size:0.9rem;
+  }
+
+  /* Booking block */
+  .booking{
+    display:grid;
+    grid-template-columns:1fr 1.15fr;
+    gap:32px;
+    align-items:stretch;
+    background:linear-gradient(180deg, var(--card), var(--bg-soft));
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:36px;
+  }
+  .booking-copy h3{
+    font-family:var(--font-display);
+    font-size:1.5rem;
+    font-weight:700;
+    letter-spacing:-0.015em;
+    line-height:1.2;
+  }
+  .booking-copy p{
+    color:var(--muted);
+    margin-top:14px;
+    font-size:0.95rem;
+  }
+  .booking-list{
+    margin-top:22px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .booking-list li{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:0.875rem;
+    color:var(--muted);
+  }
+  .booking-list li svg{ color:#a78bfa; flex-shrink:0; }
+  .booking-copy .btn{ margin-top:26px; }
+
+  .calendly-box{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:6px;
+    display:flex;
+    min-height:340px;
+    overflow:hidden;
+  }
+  .calendly-box .calendly-inline-widget{ width:100%; }
+
+  /* Final CTA */
+  .final-cta{
+    text-align:center;
+    margin-top:64px;
+    padding-top:48px;
+    border-top:1px solid var(--border);
+  }
+  .final-cta h3{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(1.5rem, 3vw, 2.1rem);
+    letter-spacing:-0.02em;
+  }
+  .final-cta p{
+    color:var(--muted);
+    margin-top:12px;
+    max-width:480px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .final-cta .btn{ margin-top:24px; }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--border);
+    padding:32px 0;
+  }
+  .footer-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    font-size:0.82rem;
+    color:var(--muted-2);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 860px){
+    .booking{ grid-template-columns:1fr; }
+  }
+  @media (max-width: 720px){
+    .problem-grid{ grid-template-columns:1fr; }
+    section{ padding:72px 0; }
+    .hero{ padding:56px 0 64px; }
+  }
+  @media (max-width: 480px){
+    .hero-actions{ flex-direction:column; width:100%; }
+    .hero-actions .btn{ width:100%; }
+    .booking{ padding:24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-fx"></div>
+<div class="bg-grid"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="logo">
+      <span class="logo-mark">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 12h10M14 12l-4-4M14 12l-4 4M18 6v12" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      FlowPilot AI
+    </div>
+    <a href="#solution" class="nav-cta">Book a Call</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ============ 1. HERO ============ -->
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <span class="eyebrow"><span class="dot"></span> AI Automation for Small Business</span>
+      <h1>Stop doing the work<br>your business <span class="accent">should be doing for you.</span></h1>
+      <p class="sub">FlowPilot AI builds custom automation systems for small business owners, agencies, consultants, and local service pros — so you respond to customers faster, follow up on every lead, and grow without hiring your way there.</p>
+
+      <div class="hero-actions">
+        <a href="#solution" class="btn btn-primary">
+          Book a Free Automation Call
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#problem" class="btn btn-secondary">Learn How It Works</a>
+      </div>
+      <p class="hero-note">No pressure. 20-minute call. Leave with a clear automation plan either way.</p>
+
+      <!-- Signature element: animated automation flow diagram -->
+      <div class="flow-wrap" aria-hidden="true">
+        <svg class="flow-svg" viewBox="0 0 640 140" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="flowGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.15"/>
+              <stop offset="50%" stop-color="#a78bfa"/>
+              <stop offset="100%" stop-color="#7c3aed" stop-opacity="0.15"/>
+            </linearGradient>
+          </defs>
+
+          <path class="flow-line" d="M70 70 H220"/>
+          <path class="flow-line delay" d="M280 70 H430"/>
+          <path class="flow-line" d="M490 70 H570"/>
+
+          <g class="flow-pulse">
+            <circle class="flow-node" cx="50" cy="70" r="26"/>
+            <circle class="flow-node-glow" cx="50" cy="70" r="5"/>
+          </g>
+          <text class="flow-label" x="50" y="112" text-anchor="middle">New Lead</text>
+
+          <g class="flow-pulse" style="animation-delay:.3s">
+            <circle class="flow-node" cx="250" cy="70" r="26"/>
+            <path d="M241 70 L248 77 L261 62" stroke="#a78bfa" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <text class="flow-label" x="250" y="112" text-anchor="middle">Auto-Qualify</text>
+
+          <g class="flow-pulse" style="animation-delay:.6s">
+            <circle class="flow-node" cx="460" cy="70" r="26"/>
+            <path d="M450 78 L450 62 L470 70 Z" fill="#a78bfa"/>
+          </g>
+          <text class="flow-label" x="460" y="112" text-anchor="middle">Instant Reply</text>
+
+          <g class="flow-pulse" style="animation-delay:.9s">
+            <circle class="flow-node" cx="596" cy="70" r="26" stroke="#7c3aed"/>
+            <path d="M586 70h20M600 62l8 8-8 8" stroke="#7c3aed" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <text class="flow-label" x="596" y="112" text-anchor="middle">Booked Call</text>
+        </svg>
+      </div>
+
+      <!-- YouTube placeholder -->
+      <div class="video-card">
+        <div class="video-frame" id="videoFrame" data-video-id="" role="button" tabindex="0" aria-label="Play video: How FlowPilot AI automates your business">
+          <div class="play-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7-11-7z" fill="#fff"/></svg>
+          </div>
+        </div>
+        <div class="video-caption">
+          <p><strong>Watch:</strong> How FlowPilot AI automates your business in 3 steps</p>
+          <span class="runtime-pill">2 min watch</span>
+        </div>
+      </div>
+      <!-- To connect: set data-video-id="YOUR_YOUTUBE_ID" on #videoFrame above -->
+
+    </div>
+  </section>
+
+  <!-- ============ 2. PROBLEM ============ -->
+  <section class="problem" id="problem">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow"><span class="dot"></span> The Reality Right Now</span>
+        <h2 class="section-title">You're not losing to bad competitors.<br>You're losing to speed.</h2>
+        <p class="section-sub">Every hour spent on repetitive work is an hour a customer waited — or went somewhere else.</p>
+      </div>
+
+      <div class="problem-grid">
+        <div class="problem-card">
+          <div class="problem-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 8v5m0 3h.01M10.3 3.9L2.8 17a2 2 0 001.7 3h15a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Leads slip through the cracks</h3>
+          <p>You're too busy running the business to reply the moment someone reaches out — and by the time you do, they've already booked with whoever answered first.</p>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 6v6l4 2M12 22a10 10 0 100-20 10 10 0 000 20z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Your week disappears into busywork</h3>
+          <p>Scheduling, data entry, follow-up emails, invoicing — hours vanish every week on tasks that don't need a human doing them, and never make it to your to-do list as "done."</p>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Growth means risk, not just reward</h3>
+          <p>Every new client feels like it justifies another hire — more payroll, more training, more overhead — before you even know if the extra work sticks around.</p>
+        </div>
+      </div>
+
+      <p class="problem-foot">None of this is a discipline problem. <span>It's a systems problem.</span></p>
+    </div>
+  </section>
+
+  <!-- ============ 3. SOLUTION ============ -->
+  <section class="solution" id="solution">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow"><span class="dot"></span> What Changes With FlowPilot AI</span>
+        <h2 class="section-title">Your business, running itself in the background</h2>
+        <p class="section-sub">We design and install the automation systems — you keep doing what you're actually good at.</p>
+      </div>
+
+      <div class="solution-top">
+        <div class="benefit-row">
+          <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 8v4l3 3M12 22a10 10 0 100-20 10 10 0 000 20z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="benefit-text">
+            <h4>Save hours every week</h4>
+            <p>Automate the repetitive tasks eating your schedule — scheduling, data entry, reminders, and reports — so your time goes toward the work only you can do.</p>
+          </div>
+        </div>
+
+        <div class="benefit-row">
+          <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M13 2L4.5 13.5H11l-1 8.5L20.5 10.5H14l-1-8.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+          <div class="benefit-text">
+            <h4>Respond to customers in minutes, not days</h4>
+            <p>New inquiries get an instant, on-brand reply — around the clock — so prospects hear from you before they hear from anyone else.</p>
+          </div>
+        </div>
+
+        <div class="benefit-row">
+          <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+          <div class="benefit-text">
+            <h4>Capture and follow up with every lead</h4>
+            <p>No more manual chasing. Every lead is logged, nurtured, and followed up automatically until they book or tell you no.</p>
+          </div>
+        </div>
+
+        <div class="benefit-row">
+          <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="benefit-text">
+            <h4>Cut manual errors that cost you money</h4>
+            <p>Automated workflows follow the same process every time — no missed steps, no double-booked slots, no typos on an invoice.</p>
+          </div>
+        </div>
+
+        <div class="benefit-row">
+          <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18M7 15l4-6 3 4 5-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="benefit-text">
+            <h4>Scale without rushing to hire</h4>
+            <p>Take on more clients and more volume on the systems you already have, and hire only when growth actually demands it.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="booking">
+        <div class="booking-copy">
+          <span class="eyebrow"><span class="dot"></span> Free Strategy Call</span>
+          <h3>See exactly what FlowPilot AI would automate in your business</h3>
+          <p>20 minutes. We'll map your current workflow, flag where you're losing time and leads, and show you what an automated version looks like — no obligation.</p>
+          <ul class="booking-list">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> A custom automation roadmap for your business</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> No tech jargon — plain answers on what's possible</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Zero pressure, zero obligation</li>
+          </ul>
+          <a href="#solution" class="btn btn-primary">
+            Book Your Free Call
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <!-- Calendly inline widget -->
+        <div class="calendly-box">
+          <div class="calendly-inline-widget" data-url="https://calendly.com/farhanhassankhan9" style="min-width:320px;height:100%;min-height:520px;"></div>
+        </div>
+      </div>
+
+      <div class="final-cta">
+        <h3>Ready to put your business on autopilot?</h3>
+        <p>Stop trading your time for tasks a system could handle. Let's build the automation that gets it back.</p>
+        <a href="#solution" class="btn btn-primary">
+          Book Your Free Strategy Call
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>© 2026 FlowPilot AI. All rights reserved.</span>
+    <span>AI automation systems for small businesses — online &amp; global.</span>
+  </div>
+</footer>
+
+<script>
+  // ---- YouTube placeholder: swap in iframe on click/keypress ----
+  // Set the YouTube video ID on the element (data-video-id="dQw4w9WgXcQ") to enable.
+  (function () {
+    var frame = document.getElementById('videoFrame');
+    if (!frame) return;
+
+    function loadVideo() {
+      var videoId = frame.getAttribute('data-video-id');
+      if (!videoId) {
+        // No video connected yet — no-op placeholder click.
+        return;
+      }
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+      iframe.title = 'FlowPilot AI video';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      frame.innerHTML = '';
+      frame.appendChild(iframe);
+    }
+
+    frame.addEventListener('click', loadVideo);
+    frame.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') loadVideo();
+    });
+  })();
+
+</script>
+
+<!-- Calendly widget script -->
+<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+</body>
+</html>
