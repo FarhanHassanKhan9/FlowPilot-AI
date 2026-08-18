@@ -5,6 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FlowPilot AI — Automate the busywork. Book the business.</title>
 <meta name="description" content="FlowPilot AI builds custom automation systems for small business owners, agencies, consultants, and local service pros — so you respond faster, capture more leads, and scale without hiring.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%237c3aed'/%3E%3Cstop offset='100%25' stop-color='%23a78bfa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='url(%23g)'/%3E%3Cpath d='M22 50h34M56 50l-14-14M56 50l-14 14M70 26v48' stroke='%23fff' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="FlowPilot AI — Stop Losing Leads. Start Capturing Revenue.">
+<meta property="og:description" content="Missed calls and forgotten follow-ups cost you customers. We build the systems that answer, follow up, and book the call for you — automatically.">
+<meta property="og:url" content="https://flowpilot.agency/">
+<meta property="og:site_name" content="FlowPilot AI">
+<meta property="og:image" content="https://flowpilot.agency/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FlowPilot AI — Stop Losing Leads. Start Capturing Revenue.">
+<meta name="twitter:description" content="Missed calls and forgotten follow-ups cost you customers. We build the systems that answer, follow up, and book the call for you — automatically.">
+<meta name="twitter:image" content="https://flowpilot.agency/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -239,57 +256,22 @@
     font-size:0.82rem;
     color:var(--muted-2);
   }
-
-  /* Signature flow diagram */
-  .flow-wrap{
-    margin-top:64px;
+  .audience-row{
+    margin-top:24px;
     display:flex;
+    flex-wrap:wrap;
+    gap:8px;
     justify-content:center;
   }
-  .flow-svg{
-    width:100%;
-    max-width:640px;
-    height:auto;
-  }
-  .flow-line{
-    fill:none;
-    stroke:url(#flowGrad);
-    stroke-width:2;
-    stroke-linecap:round;
-    stroke-dasharray:6 10;
-    animation:flowMove 3.2s linear infinite;
-    opacity:0.85;
-  }
-  .flow-line.delay{ animation-duration:4s; }
-  @keyframes flowMove{
-    to{ stroke-dashoffset:-160; }
-  }
-  .flow-node{
-    fill:var(--card);
-    stroke:var(--border-strong);
-    stroke-width:1.5;
-  }
-  .flow-node-glow{
-    fill:var(--primary);
-    opacity:0.9;
-  }
-  .flow-label{
-    font-family:var(--font-body);
-    font-size:11px;
-    fill:var(--muted);
-    font-weight:600;
-    letter-spacing:0.02em;
-  }
-  .flow-pulse{
-    animation:pulseGlow 2.4s ease-in-out infinite;
-  }
-  @keyframes pulseGlow{
-    0%,100%{ opacity:0.55; }
-    50%{ opacity:1; }
-  }
-  @media (prefers-reduced-motion: reduce){
-    .flow-line{ animation:none; }
-    .flow-pulse{ animation:none; }
+  .audience-tag{
+    font-size:0.78rem;
+    font-weight:500;
+    color:var(--muted);
+    background:var(--card);
+    border:1px solid var(--border);
+    padding:6px 13px;
+    border-radius:999px;
+    letter-spacing:0.01em;
   }
 
   /* ---------- VIDEO CARD ---------- */
@@ -402,6 +384,30 @@
     color:var(--fg);
   }
   .problem-foot span{ color:#c4b5fd; }
+
+  .founder-note{
+    max-width:600px;
+    margin:32px auto 0;
+    text-align:center;
+    padding:24px 28px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+  }
+  .founder-note p{
+    font-size:0.95rem;
+    color:var(--muted);
+    font-style:italic;
+    line-height:1.65;
+  }
+  .founder-sign{
+    display:block;
+    margin-top:14px;
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:0.85rem;
+    color:#c4b5fd;
+  }
 
   /* ---------- SOLUTION SECTION ---------- */
   .solution-top{
@@ -548,6 +554,17 @@
     .booking{ padding:24px; }
   }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "FlowPilot AI",
+  "url": "https://flowpilot.agency/",
+  "description": "FlowPilot AI builds custom automation systems for small business owners, agencies, consultants, and local service pros — so no lead goes unanswered and no follow-up gets missed.",
+  "areaServed": "Worldwide",
+  "knowsAbout": ["AI Automation", "Business Process Automation", "Lead Follow-Up Systems", "CRM Automation"]
+}
+</script>
 </head>
 <body>
 
@@ -562,7 +579,7 @@
       </span>
       FlowPilot AI
     </div>
-    <a href="#solution" class="nav-cta">Book a Call</a>
+    <a href="#book-a-call" class="nav-cta">Book a Call</a>
   </div>
 </nav>
 
@@ -572,58 +589,24 @@
   <section class="hero">
     <div class="wrap hero-inner">
       <span class="eyebrow"><span class="dot"></span> AI Automation for Small Business</span>
-      <h1>Stop doing the work<br>your business <span class="accent">should be doing for you.</span></h1>
-      <p class="sub">FlowPilot AI builds custom automation systems for small business owners, agencies, consultants, and local service pros — so you respond to customers faster, follow up on every lead, and grow without hiring your way there.</p>
+      <h1>Stop losing leads.<br><span class="accent">Start capturing revenue.</span></h1>
+      <p class="sub">Missed calls and forgotten follow-ups cost you customers. We build the systems that answer, follow up, and book the call for you automatically, so you stop losing potential customers and revenue.</p>
+
+      <div class="audience-row" aria-label="Built for">
+        <span class="audience-tag">Small Business Owners</span>
+        <span class="audience-tag">Agencies</span>
+        <span class="audience-tag">Consultants</span>
+        <span class="audience-tag">Local Service Pros</span>
+      </div>
 
       <div class="hero-actions">
-        <a href="#solution" class="btn btn-primary">
+        <a href="#book-a-call" class="btn btn-primary">
           Book a Free Automation Call
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
         <a href="#problem" class="btn btn-secondary">Learn How It Works</a>
       </div>
-      <p class="hero-note">No pressure. 20-minute call. Leave with a clear automation plan either way.</p>
-
-      <!-- Signature element: animated automation flow diagram -->
-      <div class="flow-wrap" aria-hidden="true">
-        <svg class="flow-svg" viewBox="0 0 640 140" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="flowGrad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.15"/>
-              <stop offset="50%" stop-color="#a78bfa"/>
-              <stop offset="100%" stop-color="#7c3aed" stop-opacity="0.15"/>
-            </linearGradient>
-          </defs>
-
-          <path class="flow-line" d="M70 70 H220"/>
-          <path class="flow-line delay" d="M280 70 H430"/>
-          <path class="flow-line" d="M490 70 H570"/>
-
-          <g class="flow-pulse">
-            <circle class="flow-node" cx="50" cy="70" r="26"/>
-            <circle class="flow-node-glow" cx="50" cy="70" r="5"/>
-          </g>
-          <text class="flow-label" x="50" y="112" text-anchor="middle">New Lead</text>
-
-          <g class="flow-pulse" style="animation-delay:.3s">
-            <circle class="flow-node" cx="250" cy="70" r="26"/>
-            <path d="M241 70 L248 77 L261 62" stroke="#a78bfa" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          </g>
-          <text class="flow-label" x="250" y="112" text-anchor="middle">Auto-Qualify</text>
-
-          <g class="flow-pulse" style="animation-delay:.6s">
-            <circle class="flow-node" cx="460" cy="70" r="26"/>
-            <path d="M450 78 L450 62 L470 70 Z" fill="#a78bfa"/>
-          </g>
-          <text class="flow-label" x="460" y="112" text-anchor="middle">Instant Reply</text>
-
-          <g class="flow-pulse" style="animation-delay:.9s">
-            <circle class="flow-node" cx="596" cy="70" r="26" stroke="#7c3aed"/>
-            <path d="M586 70h20M600 62l8 8-8 8" stroke="#7c3aed" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          </g>
-          <text class="flow-label" x="596" y="112" text-anchor="middle">Booked Call</text>
-        </svg>
-      </div>
+      <p class="hero-note">100% risk-free. 20-minute call. Leave with a clear automation plan either way.</p>
 
       <!-- YouTube placeholder -->
       <div class="video-card">
@@ -678,6 +661,11 @@
       </div>
 
       <p class="problem-foot">None of this is a discipline problem. <span>It's a systems problem.</span></p>
+
+      <div class="founder-note">
+        <p>"I started FlowPilot AI after watching too many small businesses lose good customers to slow replies and dropped follow-ups — not because they didn't care, but because there weren't enough hours in the day. FlowPilot AI exists to fix that: systems that do the following up, so you don't have to."</p>
+        <span class="founder-sign">— Farhan Hassan, Founder</span>
+      </div>
     </div>
   </section>
 
@@ -732,20 +720,21 @@
         </div>
       </div>
 
-      <div class="booking">
+      <div class="booking" id="book-a-call">
         <div class="booking-copy">
           <span class="eyebrow"><span class="dot"></span> Free Strategy Call</span>
           <h3>See exactly what FlowPilot AI would automate in your business</h3>
-          <p>20 minutes. We'll map your current workflow, flag where you're losing time and leads, and show you what an automated version looks like — no obligation.</p>
+          <p>20 minutes. We'll map your current workflow, flag where you're losing leads and revenue, and show you the automated version — completely risk-free.</p>
           <ul class="booking-list">
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> A custom automation roadmap for your business</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> No tech jargon — plain answers on what's possible</li>
-            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Zero pressure, zero obligation</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> 100% risk-free — no cost, no pressure, no obligation to buy anything</li>
           </ul>
-          <a href="#solution" class="btn btn-primary">
+          <a href="#book-a-call" class="btn btn-primary">
             Book Your Free Call
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
+          <p style="margin-top:14px; font-size:0.8rem; color:var(--muted-2);">Now onboarding founding clients — early access to a hands-on setup, before pricing scales with proven results.</p>
         </div>
 
         <!-- Calendly inline widget -->
@@ -757,7 +746,7 @@
       <div class="final-cta">
         <h3>Ready to put your business on autopilot?</h3>
         <p>Stop trading your time for tasks a system could handle. Let's build the automation that gets it back.</p>
-        <a href="#solution" class="btn btn-primary">
+        <a href="#book-a-call" class="btn btn-primary">
           Book Your Free Strategy Call
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -769,12 +758,14 @@
 
 <footer>
   <div class="wrap footer-inner">
-    <span>© 2026 FlowPilot AI. All rights reserved.</span>
+    <span>© <span id="copyYear">2026</span> FlowPilot AI. All rights reserved.</span>
     <span>AI automation systems for small businesses — online &amp; global.</span>
   </div>
 </footer>
 
 <script>
+  document.getElementById('copyYear').textContent = new Date().getFullYear();
+
   // ---- YouTube placeholder: swap in iframe on click/keypress ----
   // Set the YouTube video ID on the element (data-video-id="dQw4w9WgXcQ") to enable.
   (function () {
